@@ -9,6 +9,8 @@ public class ContextClockradio {
     private Date mTime;
     private String mDisplayText;
     public boolean isClockRunning = false;
+    private double amFreq;
+    private double fmFreq;
 
     public static MainUI ui;
 
@@ -52,6 +54,9 @@ public class ContextClockradio {
     public Date getTime(){
         return mTime;
     }
+
+    public double getAmFreq(){ return amFreq; }
+    public double getFmFreq(){ return fmFreq; }
 
     //Disse metoder bliver kaldt fra UI tråden
     public void onClick_Hour() {
