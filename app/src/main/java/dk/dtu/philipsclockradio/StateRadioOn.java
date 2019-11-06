@@ -67,7 +67,4 @@ public class StateRadioOn extends StateAdapter {
         context.setState(new StateSaveStation());
     }
 
-
-
-
 }
