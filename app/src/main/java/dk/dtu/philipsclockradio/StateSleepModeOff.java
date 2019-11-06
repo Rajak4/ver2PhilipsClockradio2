@@ -9,6 +9,7 @@ public class StateSleepModeOff extends StateAdapter {
 
     @Override
     public void onClick_Sleep(ContextClockradio context) {
+        context.restartCountdown(context.getSleepTime());
         context.setState(new StateSleepModeOn());
     }
 }

@@ -58,8 +58,8 @@ public class ContextClockradio {
         mHandler.postDelayed(mRunnable, time);
     }
     public void restartCountdown(int time){
-        mHandler.postDelayed(mRunnable, time);
         mHandler.removeCallbacks(mRunnable);
+        mHandler.postDelayed(mRunnable, time);
     }
 
     //setState er når vi skifter State

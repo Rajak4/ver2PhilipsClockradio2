@@ -13,11 +13,12 @@ public class StateSleepModeOn extends StateAdapter {
 
     @Override
     public void onClick_Sleep(ContextClockradio context) {
-
-        if(location < sleepTime.length) {
+        context.restartCountdown(context.getSleepTime());
+        if (location < sleepTime.length) {
             context.ui.setDisplayText(String.valueOf(sleepTime[location++]));
         } else {
             context.setState(new StateSleepModeOff());
         }
+
     }
 }
