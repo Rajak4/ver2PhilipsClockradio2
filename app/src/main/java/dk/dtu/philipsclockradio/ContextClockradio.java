@@ -19,6 +19,8 @@ public class ContextClockradio {
     private int[] savedAm = new int[20];
     private int[] savedFm = new int[20];
     private final int SLEEPTIME = 5000;
+    private Date al1;
+    private Date al2;
 
     private Runnable mRunnable = new Runnable() {
         @Override
@@ -81,6 +83,12 @@ public class ContextClockradio {
 
     void updateDisplayTime(){
         mDisplayText = mTime.toString().substring(11,16);
+        ui.setDisplayText(mDisplayText);
+    }
+
+    //Overload
+    void updateDisplayTime(Date time){
+        mDisplayText = time.toString().substring(11, 16);
         ui.setDisplayText(mDisplayText);
     }
 
@@ -196,5 +204,21 @@ public class ContextClockradio {
 
     public int getSleepTime() {
         return SLEEPTIME;
+    }
+
+    public Date getAl1() {
+        return al1;
+    }
+
+    public void setAl1(Date al1) {
+        this.al1 = al1;
+    }
+
+    public Date getAl2() {
+        return al2;
+    }
+
+    public void setAl2(Date al2) {
+        this.al2 = al2;
     }
 }

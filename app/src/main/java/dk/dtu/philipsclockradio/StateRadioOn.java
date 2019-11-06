@@ -8,7 +8,6 @@ public class StateRadioOn extends StateAdapter {
         context.setFmOn(true);
         context.ui.statusTextview.setText("FM on");
         context.ui.setDisplayText("FM:" + context.getFmFreq());
-
     }
 
     @Override
