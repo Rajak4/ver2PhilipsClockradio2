@@ -3,14 +3,26 @@ package dk.dtu.philipsclockradio;
 import java.util.Calendar;
 import java.util.Date;
 
-//
+
 public class ContextClockradio {
     private State currentState;
     private Date mTime;
     private String mDisplayText;
     public boolean isClockRunning = false;
-    private double amFreq;
-    private double fmFreq;
+    private int amFreq;
+    private int fmFreq;
+    private boolean amOn;
+    private boolean fmOn;
+    private int[] savedAm = new int[20];
+    private int[] savedFm = new int[20];
+
+    public int getAmFreq(){
+        return amFreq;
+    }
+    public int getFmFreq(){
+        return fmFreq;
+    }
+
 
     public static MainUI ui;
 
@@ -55,8 +67,6 @@ public class ContextClockradio {
         return mTime;
     }
 
-    public double getAmFreq(){ return amFreq; }
-    public double getFmFreq(){ return fmFreq; }
 
     //Disse metoder bliver kaldt fra UI tråden
     public void onClick_Hour() {
@@ -121,5 +131,45 @@ public class ContextClockradio {
 
     public void onLongClick_Snooze(){
         currentState.onLongClick_Snooze(this);
+    }
+
+    public void setFmFreq(int fmFreq) {
+        this.fmFreq = fmFreq;
+    }
+
+    public void setAmFreq(int amFreq) {
+        this.amFreq = amFreq;
+    }
+
+    public int[] getSavedFm() {
+        return savedFm;
+    }
+
+    public void setSavedFm(int location, int value) {
+        this.savedFm[location] = value;
+    }
+
+    public int[] getSavedAm() {
+        return savedAm;
+    }
+
+    public void setSavedAm(int location, int value) {
+        this.savedAm[location] = value;
+    }
+
+    public boolean isAmOn() {
+        return amOn;
+    }
+
+    public void setAmOn(boolean amOn) {
+        this.amOn = amOn;
+    }
+
+    public boolean isFmOn() {
+        return fmOn;
+    }
+
+    public void setFmOn(boolean fmOn) {
+        this.fmOn = fmOn;
     }
 }

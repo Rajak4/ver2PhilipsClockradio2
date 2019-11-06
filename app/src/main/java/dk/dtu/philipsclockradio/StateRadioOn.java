@@ -2,37 +2,31 @@ package dk.dtu.philipsclockradio;
 
 public class StateRadioOn extends StateAdapter {
 
-    private boolean amOn;
-    private boolean fmOn;
-    private int amFreq;
-    private int fmFreq;
-
     //Radioen starter automatisk på FM.
     @Override
     public void onEnterState(ContextClockradio context) {
-        fmOn = true;
+        context.setFmOn(true);
         context.ui.statusTextview.setText("FM on");
-        context.ui.setDisplayText("FM:" + fmFreq);
+        context.ui.setDisplayText("FM:" + context.getFmFreq());
 
     }
 
     @Override
     public void onExitState(ContextClockradio context) {
-
     }
     @Override
     public void onClick_Power(ContextClockradio context) {
-        if(fmOn){
-            fmOn = false;
-            amOn = true;
+        if(context.isFmOn()){
+            context.setFmOn(false);
+            context.setAmOn(true);
             context.ui.statusTextview.setText("AM on");
-            context.ui.setDisplayText("AM:" + amFreq);
+            context.ui.setDisplayText("AM:" + context.getAmFreq());
         }
-        else if(amOn){
-            fmOn = true;
-            amOn = false;
+        else if(context.isAmOn()){
+            context.setFmOn(true);
+            context.setAmOn(false);
             context.ui.statusTextview.setText("FM on");
-            context.ui.setDisplayText("FM:" + fmFreq);
+            context.ui.setDisplayText("FM:" + context.getFmFreq());
         }
 
     }
@@ -45,28 +39,34 @@ public class StateRadioOn extends StateAdapter {
     }
     @Override
     public void onClick_Hour(ContextClockradio context) {
-        if(fmOn && fmFreq > 0){
-                fmFreq--;
-                context.ui.setDisplayText("FM:" + fmFreq);
+        if(context.isFmOn() && context.getFmFreq() > 0){
+                context.setFmFreq(context.getFmFreq()-1);
+                context.ui.setDisplayText("FM:" + context.getFmFreq());
         }
-        else if (amOn && amFreq > 0){
-            amFreq--;
-            context.ui.setDisplayText("AM:" + amFreq);
+        else if (context.isAmOn() && context.getAmFreq() > 0){
+            context.setAmFreq(context.getAmFreq()-1);
+            context.ui.setDisplayText("AM:" + context.getAmFreq());
         }
 
     }
     @Override
     public void onClick_Min(ContextClockradio context) {
-        if(fmOn){
-            fmFreq++;
-            context.ui.setDisplayText("FM:" + fmFreq);
+        if(context.isFmOn()){
+            context.setFmFreq(context.getFmFreq()+1);
+            context.ui.setDisplayText("FM:" + context.getFmFreq());
         }
         else {
-            amFreq++;
-            context.ui.setDisplayText("AM:" + amFreq);
+            context.setAmFreq(context.getAmFreq()+1);
+            context.ui.setDisplayText("AM:" + context.getAmFreq());
         }
 
     }
+    //Skifter til state hvor radiokanaler kan gemmes
+    @Override
+    public void onLongClick_Preset(ContextClockradio context) {
+        context.setState(new StateSaveStation());
+    }
+
 
 
 
