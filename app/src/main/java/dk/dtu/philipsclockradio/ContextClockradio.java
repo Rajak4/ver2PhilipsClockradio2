@@ -1,7 +1,10 @@
 package dk.dtu.philipsclockradio;
 
+import android.os.Handler;
+
 import java.util.Calendar;
 import java.util.Date;
+
 
 
 public class ContextClockradio {
@@ -15,6 +18,16 @@ public class ContextClockradio {
     private boolean fmOn;
     private int[] savedAm = new int[20];
     private int[] savedFm = new int[20];
+    private final int SLEEPTIME = 5000;
+
+    private Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            setState(new StateStandby(mTime));
+        }
+    };
+    public static Handler mHandler = new Handler();
+
 
     public int getAmFreq(){
         return amFreq;
@@ -39,6 +52,14 @@ public class ContextClockradio {
         //Når app'en starter, så går vi ind i Standby State
         currentState = new StateStandby(mTime);
         currentState.onEnterState(this);
+    }
+
+    public void startCountdown(int time){
+        mHandler.postDelayed(mRunnable, time);
+    }
+    public void restartCountdown(int time){
+        mHandler.postDelayed(mRunnable, time);
+        mHandler.removeCallbacks(mRunnable);
     }
 
     //setState er når vi skifter State
@@ -171,5 +192,9 @@ public class ContextClockradio {
 
     public void setFmOn(boolean fmOn) {
         this.fmOn = fmOn;
+    }
+
+    public int getSleepTime() {
+        return SLEEPTIME;
     }
 }

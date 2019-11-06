@@ -8,12 +8,16 @@ public class StateSleepModeOn extends StateAdapter {
     @Override
     public void onEnterState(ContextClockradio context) {
         context.ui.turnOnLED(3);
+        context.ui.setDisplayText(String.valueOf(sleepTime[location++]));
     }
 
     @Override
     public void onClick_Sleep(ContextClockradio context) {
 
-        context.ui.setDisplayText(String.valueOf(sleepTime[location++]));
-
+        if(location < sleepTime.length) {
+            context.ui.setDisplayText(String.valueOf(sleepTime[location++]));
+        } else {
+            context.setState(new StateSleepModeOff());
+        }
     }
 }

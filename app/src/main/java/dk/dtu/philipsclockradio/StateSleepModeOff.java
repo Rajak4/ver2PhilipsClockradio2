@@ -6,4 +6,9 @@ public class StateSleepModeOff extends StateAdapter {
     public void onEnterState(ContextClockradio context) {
         context.ui.turnOffLED(3);
     }
+
+    @Override
+    public void onClick_Sleep(ContextClockradio context) {
+        context.setState(new StateSleepModeOn());
+    }
 }
