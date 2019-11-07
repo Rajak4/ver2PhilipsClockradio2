@@ -12,6 +12,7 @@ public class StateSaveStation extends StateAdapter {
         context.ui.statusTextview.setText("Save station");
     }
 
+    //Gemmer radiokanaler i array på exit
     @Override
     public void onExitState(ContextClockradio context) {
         context.ui.turnOffTextBlink();
@@ -39,6 +40,7 @@ public class StateSaveStation extends StateAdapter {
         }
     }
 
+    //Tænder radioen
     @Override
     public void onClick_Preset(ContextClockradio context) {
       context.setState(new StateRadioOn());

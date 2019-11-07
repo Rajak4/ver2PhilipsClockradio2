@@ -27,6 +27,7 @@ public class StateStandby extends StateAdapter {
                 mTime.setTime(currentTime + 60000);
                 mContext.setTime(mTime);
 
+
                 switch (mContext.checkAlarms(mContext.getAl1(), mContext.getAl2(), mContext)) {
                     case 0:
                         break;
@@ -102,7 +103,10 @@ public class StateStandby extends StateAdapter {
 
     @Override
     public void onClick_AL1(ContextClockradio context) {
-        //Looper mellem 0, 1, 2
+        /*
+        Looper mellem 0, 1, 2. Skal skifte mellem om alarmen skal ringe med alarmtone, radio
+        eller være muted (virker ikke helt).
+         */
         localLedCounter1 = (localLedCounter1 + 1) % 3;
 
         if (context.getAl1() != null) {
@@ -128,7 +132,6 @@ public class StateStandby extends StateAdapter {
 
     @Override
     public void onClick_AL2(ContextClockradio context) {
-        //Looper mellem 0, 1, 2
         localLedCounter2 = (localLedCounter2 + 1) % 3;
 
         if (context.getAl2() != null) {

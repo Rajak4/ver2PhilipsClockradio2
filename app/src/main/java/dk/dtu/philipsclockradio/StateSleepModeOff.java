@@ -8,6 +8,7 @@ public class StateSleepModeOff extends StateAdapter {
         context.ui.setDisplayText("Off");
     }
 
+    //Nulstiller idle timeren, så den starter forfra ved 5 sek
     @Override
     public void onClick_Sleep(ContextClockradio context) {
         context.restartCountdown(context.getSleepTime());

@@ -10,9 +10,7 @@ public class StateRadioOn extends StateAdapter {
         context.ui.setDisplayText("FM:" + context.getFmFreq());
     }
 
-    @Override
-    public void onExitState(ContextClockradio context) {
-    }
+    //Skifter mellem AM og FM
     @Override
     public void onClick_Power(ContextClockradio context) {
         if(context.isFmOn()){
@@ -36,6 +34,8 @@ public class StateRadioOn extends StateAdapter {
         context.setState(new StateStandby(context.getTime()));
         context.ui.statusTextview.setText("Standby");
     }
+
+    //Skifter frekvens
     @Override
     public void onClick_Hour(ContextClockradio context) {
         if(context.isFmOn() && context.getFmFreq() > 0){

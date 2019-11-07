@@ -5,6 +5,7 @@ public class StateSleepModeOn extends StateAdapter {
     private int[] sleepTime = {120, 90, 60, 30, 15};
     private int location = 0;
 
+    //Nedenstående to metoder viser arrayelementerne på display'et alt efter hvor mange gange man trykker på sleep.
     @Override
     public void onEnterState(ContextClockradio context) {
         context.ui.turnOnLED(3);

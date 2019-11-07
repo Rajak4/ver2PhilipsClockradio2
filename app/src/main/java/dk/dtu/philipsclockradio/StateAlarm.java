@@ -9,6 +9,8 @@ public class StateAlarm extends StateAdapter {
 
     @Override
     public void onEnterState(ContextClockradio context) {
+
+        //Urets klokkeslæt konverteres til MS og gemmes i variabel
         context.ui.turnOnTextBlink();
         timeInMS = context.getTime().getTime();
     }
@@ -21,6 +23,8 @@ public class StateAlarm extends StateAdapter {
 
     @Override
     public void onClick_AL1(ContextClockradio context) {
+
+        //Alarmens tid gemmes i Date objekt
         context.setAl1(new Date(timeInMS));
         context.ui.turnOnLED(1);
         context.setState(new StateStandby(context.getTime()));
@@ -33,6 +37,10 @@ public class StateAlarm extends StateAdapter {
         context.setState(new StateStandby(context.getTime()));
     }
 
+    /*De to nedenstående metoder lægger tid til den variabel som bruges til at sætte alarmen.
+    Dvs. at et klik på hour lægger 360.000 MS (en time) til variablen, som ellers som udgangspunkt
+    er urets klokkeslæt.
+     */
     @Override
     public void onClick_Hour(ContextClockradio context) {
         timeInMS += 3600000;

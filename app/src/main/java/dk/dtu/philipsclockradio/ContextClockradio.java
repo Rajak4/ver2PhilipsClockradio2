@@ -55,8 +55,13 @@ public class ContextClockradio {
      */
     public int checkAlarms(Date al1, Date al2, ContextClockradio context){
 
+        //Gemmer en string med urets klokkeslæt
         String time = context.getTime().toString().substring(11,16);
+
+        //Tjekker om en alarm er tom eller ej
         if(al1 != null){
+
+            //Sammenligner alarmens tid med urets klokkeslæt
             if(al1.toString().substring(11,16).equals(time)){
                 return 1;
             }
@@ -66,7 +71,6 @@ public class ContextClockradio {
                 return 2;
             }
         }
-
         return 0;
     }
 
@@ -88,6 +92,7 @@ public class ContextClockradio {
         currentState.onEnterState(this);
     }
 
+    //Kører runnable efter x tid (bruges fx til at gå tilbage til standby mode hvis man er idle)
     public void startCountdown(int time){
         mHandler.postDelayed(mRunnable, time);
     }
@@ -118,7 +123,7 @@ public class ContextClockradio {
         ui.setDisplayText(mDisplayText);
     }
 
-    //Overload
+    //Overload for at give parameter med som kan bruges i stedet for mTime
     void updateDisplayTime(Date time){
         mDisplayText = time.toString().substring(11, 16);
         ui.setDisplayText(mDisplayText);
