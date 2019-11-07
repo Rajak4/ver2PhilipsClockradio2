@@ -25,6 +25,8 @@ public class ContextClockradio {
     private boolean al2RadioLightOn;
     private int ledCounter1 = 0;
     private int ledCounter2 = 0;
+    private boolean muted1 = false;
+    private boolean muted2 = false;
 
 
     private Runnable mRunnable = new Runnable() {
@@ -283,5 +285,21 @@ public class ContextClockradio {
 
     public void setLedCounter2(int ledCounter2) {
         this.ledCounter2 = ledCounter2;
+    }
+
+    public boolean isMuted1() {
+        return muted1;
+    }
+
+    public void setMuted1(boolean muted) {
+        this.muted1 = muted;
+    }
+
+    public boolean isMuted2() {
+        return muted2;
+    }
+
+    public void setMuted2(boolean muted2) {
+        this.muted2 = muted2;
     }
 }

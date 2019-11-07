@@ -1,6 +1,7 @@
 package dk.dtu.philipsclockradio;
 
 import android.os.Handler;
+
 import java.util.Date;
 
 public class StateStandby extends StateAdapter {
@@ -12,7 +13,7 @@ public class StateStandby extends StateAdapter {
     private int localLedCounter2;
 
 
-    StateStandby(Date time){
+    StateStandby(Date time) {
         mTime = time;
     }
 
@@ -26,12 +27,15 @@ public class StateStandby extends StateAdapter {
                 mTime.setTime(currentTime + 60000);
                 mContext.setTime(mTime);
 
-                switch (mContext.checkAlarms(mContext.getAl1(), mContext.getAl2(), mContext)){
-                    case 0: break;
-                    case 1: mContext.setState(new StatePlayAlarm(1));
-                            break;
-                    case 2: mContext.setState(new StatePlayAlarm(2));
-                            break;
+                switch (mContext.checkAlarms(mContext.getAl1(), mContext.getAl2(), mContext)) {
+                    case 0:
+                        break;
+                    case 1:
+                        mContext.setState(new StatePlayAlarm(1));
+                        break;
+                    case 2:
+                        mContext.setState(new StatePlayAlarm(2));
+                        break;
                 }
 
             } finally {
@@ -58,7 +62,7 @@ public class StateStandby extends StateAdapter {
         this.localLedCounter2 = context.getLedCounter2();
 
         context.updateDisplayTime();
-        if(!context.isClockRunning){
+        if (!context.isClockRunning) {
             startClock();
         }
     }
@@ -74,6 +78,7 @@ public class StateStandby extends StateAdapter {
         stopClock();
         context.setState(new StateSetTime());
     }
+
     @Override
     public void onLongClick_Power(ContextClockradio context) {
         stopClock();
@@ -97,35 +102,51 @@ public class StateStandby extends StateAdapter {
 
     @Override
     public void onClick_AL1(ContextClockradio context) {
-       localLedCounter1 = localLedCounter1 + 1 % 3;
+        //Looper mellem 0, 1, 2
+        localLedCounter1 = (localLedCounter1 + 1) % 3;
 
-       if(context.getAl1() != null){
-           switch (localLedCounter1){
-               case 0: context.ui.turnOnLED(1);
-                        context.ui.turnOffLED(2);
-                        break;
-               case 1: context.ui.turnOnLED(2);
-                        context.ui.turnOffLED(1);
-                        break;
-               case 2: context.ui.turnOffLED(1);
-                        context.ui.turnOffLED(2);
-                        break;
-           }
-       }
+        if (context.getAl1() != null) {
+            switch (localLedCounter1) {
+                case 0:
+                    context.ui.turnOnLED(1);
+                    context.ui.turnOffLED(2);
+                    context.setMuted1(false);
+                    break;
+                case 1:
+                    context.ui.turnOnLED(2);
+                    context.ui.turnOffLED(1);
+                    context.setMuted1(false);
+                    break;
+                case 2:
+                    context.ui.turnOffLED(1);
+                    context.ui.turnOffLED(2);
+                    context.setMuted1(true);
+                    break;
+            }
+        }
     }
 
     @Override
     public void onClick_AL2(ContextClockradio context) {
-        if(context.getAl2() != null){
-            switch (localLedCounter2){
-                case 0: context.ui.turnOnLED(4);
+        //Looper mellem 0, 1, 2
+        localLedCounter2 = (localLedCounter2 + 1) % 3;
+
+        if (context.getAl2() != null) {
+            switch (localLedCounter2) {
+                case 0:
+                    context.ui.turnOnLED(4);
                     context.ui.turnOffLED(5);
+                    context.setMuted2(false);
                     break;
-                case 1: context.ui.turnOnLED(5);
+                case 1:
+                    context.ui.turnOnLED(5);
                     context.ui.turnOffLED(4);
+                    context.setMuted2(false);
                     break;
-                case 2: context.ui.turnOffLED(4);
+                case 2:
+                    context.ui.turnOffLED(4);
                     context.ui.turnOffLED(5);
+                    context.setMuted2(true);
                     break;
             }
         }
