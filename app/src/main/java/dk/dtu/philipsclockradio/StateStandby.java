@@ -8,6 +8,9 @@ public class StateStandby extends StateAdapter {
     private Date mTime;
     private static Handler mHandler = new Handler();
     private ContextClockradio mContext;
+    private int localLedCounter1;
+    private int localLedCounter2;
+
 
     StateStandby(Date time){
         mTime = time;
@@ -23,8 +26,12 @@ public class StateStandby extends StateAdapter {
                 mTime.setTime(currentTime + 60000);
                 mContext.setTime(mTime);
 
-                if(mContext.checkAlarms(mContext.getAl1(), mContext.getAl2(), mContext)){
-                    mContext.setState(new StatePlayAlarm());
+                switch (mContext.checkAlarms(mContext.getAl1(), mContext.getAl2(), mContext)){
+                    case 0: break;
+                    case 1: mContext.setState(new StatePlayAlarm(1));
+                            break;
+                    case 2: mContext.setState(new StatePlayAlarm(2));
+                            break;
                 }
 
             } finally {
@@ -47,11 +54,19 @@ public class StateStandby extends StateAdapter {
     public void onEnterState(ContextClockradio context) {
         //Lokal context oprettet for at Runnable kan få adgang
         mContext = context;
+        this.localLedCounter1 = context.getLedCounter1();
+        this.localLedCounter2 = context.getLedCounter2();
 
         context.updateDisplayTime();
         if(!context.isClockRunning){
             startClock();
         }
+    }
+
+    @Override
+    public void onExitState(ContextClockradio context) {
+        context.setLedCounter1(localLedCounter1);
+        context.setLedCounter2(localLedCounter2);
     }
 
     @Override
@@ -82,30 +97,36 @@ public class StateStandby extends StateAdapter {
 
     @Override
     public void onClick_AL1(ContextClockradio context) {
-        if (context.getAl1() != null) {
-            if (context.isAl1RadioLightOn()) {
-                context.ui.turnOnLED(1);
-                context.ui.turnOffLED(2);
-                context.setAl1RadioLightOn(false);
-            } else {
-                context.ui.turnOffLED(1);
-                context.ui.turnOnLED(2);
-                context.setAl1RadioLightOn(true);
-            }
-        }
+       localLedCounter1 = localLedCounter1 + 1 % 3;
+
+       if(context.getAl1() != null){
+           switch (localLedCounter1){
+               case 0: context.ui.turnOnLED(1);
+                        context.ui.turnOffLED(2);
+                        break;
+               case 1: context.ui.turnOnLED(2);
+                        context.ui.turnOffLED(1);
+                        break;
+               case 2: context.ui.turnOffLED(1);
+                        context.ui.turnOffLED(2);
+                        break;
+           }
+       }
     }
 
     @Override
     public void onClick_AL2(ContextClockradio context) {
-        if (context.getAl2() != null) {
-            if (context.isAl2RadioLightOn()) {
-                context.ui.turnOnLED(4);
-                context.ui.turnOffLED(5);
-                context.setAl2RadioLightOn(false);
-            } else {
-                context.ui.turnOffLED(4);
-                context.ui.turnOnLED(5);
-                context.setAl2RadioLightOn(true);
+        if(context.getAl2() != null){
+            switch (localLedCounter2){
+                case 0: context.ui.turnOnLED(4);
+                    context.ui.turnOffLED(5);
+                    break;
+                case 1: context.ui.turnOnLED(5);
+                    context.ui.turnOffLED(4);
+                    break;
+                case 2: context.ui.turnOffLED(4);
+                    context.ui.turnOffLED(5);
+                    break;
             }
         }
     }

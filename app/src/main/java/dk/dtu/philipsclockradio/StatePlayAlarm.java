@@ -1,16 +1,17 @@
 package dk.dtu.philipsclockradio;
 
 public class StatePlayAlarm extends StateAdapter {
-    private boolean AL1;
+    private int alarm;
 
-    public StatePlayAlarm(boolean AL1){
-        this.AL1 = AL1;
+    public StatePlayAlarm(int alarm){
+        this.alarm = alarm;
     }
 
     @Override
     public void onEnterState(ContextClockradio context) {
-        String ringRing = AL1 ? "*AL1*" : "*AL2*";
-        context.ui.setDisplayText(ringRing);
+
+
+
         if(context.ui.getDisplayLed1()){
             context.ui.statusTextview.setText("Alarm 1 ringing via radio");
         }
@@ -23,23 +24,28 @@ public class StatePlayAlarm extends StateAdapter {
         else if(context.ui.getDisplayLed5()){
             context.ui.statusTextview.setText("Alarm 2 ringing via alarm");
         }
+
+        //Updating display text to show which alarm is ringing depending on what's coming with the constructor
+        String ringRing = "*AL" + alarm + "*";
+        context.ui.setDisplayText(ringRing);
+
     }
 
     @Override
     public void onExitState(ContextClockradio context) {
-
+        context.ui.statusTextview.setText("");
     }
 
     @Override
     public void onClick_AL1(ContextClockradio context) {
-        if(AL1){
+        if(alarm == 1){
             context.setState(new StateStandby(context.getTime()));
         }
     }
 
     @Override
     public void onClick_AL2(ContextClockradio context) {
-        if(!AL1){
+        if(alarm == 2){
             context.setState(new StateStandby(context.getTime()));
         }
     }

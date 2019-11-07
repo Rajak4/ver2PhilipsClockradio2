@@ -23,6 +23,8 @@ public class ContextClockradio {
     private Date al2;
     private boolean al1RadioLightOn;
     private boolean al2RadioLightOn;
+    private int ledCounter1 = 0;
+    private int ledCounter2 = 0;
 
 
     private Runnable mRunnable = new Runnable() {
@@ -42,18 +44,28 @@ public class ContextClockradio {
     }
 
 
-    public boolean checkAlarms(Date al1, Date al2, ContextClockradio context){
-        String alarm1 = ".";
-        String alarm2 = ".";
+    /**
+     *
+     * @param al1 er første date objekt med alarm1
+     * @param al2 er anden date objekt med alarm2
+     * @param context
+     * @return 1 hvis første alarm skal ringe, 2 hvis anden alarm skal ringe, 0 hvis ingen alarmer skal ringe.
+     */
+    public int checkAlarms(Date al1, Date al2, ContextClockradio context){
+
         String time = context.getTime().toString().substring(11,16);
-        if(alarm1 != null){
-            alarm1 = al1.toString().substring(11,16);
+        if(al1 != null){
+            if(al1.toString().substring(11,16).equals(time)){
+                return 1;
+            }
         }
-        if(alarm2 != null){
-            alarm2 = al2.toString().substring(11,16);
+        if(al2 != null){
+            if(al2.toString().substring(11,16).equals(time)){
+                return 2;
+            }
         }
 
-        return alarm1.equals(time) || alarm2.equals(time);
+        return 0;
     }
 
 
@@ -255,5 +267,21 @@ public class ContextClockradio {
 
     public void setAl2RadioLightOn(boolean al2RadioLightOn) {
         this.al2RadioLightOn = al2RadioLightOn;
+    }
+
+    public int getLedCounter1() {
+        return ledCounter1;
+    }
+
+    public void setLedCounter1(int ledCounter) {
+        this.ledCounter1 = ledCounter;
+    }
+
+    public int getLedCounter2() {
+        return ledCounter2;
+    }
+
+    public void setLedCounter2(int ledCounter2) {
+        this.ledCounter2 = ledCounter2;
     }
 }
