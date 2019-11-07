@@ -22,6 +22,11 @@ public class StateStandby extends StateAdapter {
                 long currentTime = mTime.getTime();
                 mTime.setTime(currentTime + 60000);
                 mContext.setTime(mTime);
+
+                if(mContext.checkAlarms(mContext.getAl1(), mContext.getAl2(), mContext)){
+                    mContext.setState(new StatePlayAlarm());
+                }
+
             } finally {
                 mHandler.postDelayed(mSetTime, 60000);
             }
@@ -73,5 +78,35 @@ public class StateStandby extends StateAdapter {
     @Override
     public void onLongClick_AL2(ContextClockradio context) {
         context.setState(new StateAlarm());
+    }
+
+    @Override
+    public void onClick_AL1(ContextClockradio context) {
+        if (context.getAl1() != null) {
+            if (context.isAl1RadioLightOn()) {
+                context.ui.turnOnLED(1);
+                context.ui.turnOffLED(2);
+                context.setAl1RadioLightOn(false);
+            } else {
+                context.ui.turnOffLED(1);
+                context.ui.turnOnLED(2);
+                context.setAl1RadioLightOn(true);
+            }
+        }
+    }
+
+    @Override
+    public void onClick_AL2(ContextClockradio context) {
+        if (context.getAl2() != null) {
+            if (context.isAl2RadioLightOn()) {
+                context.ui.turnOnLED(4);
+                context.ui.turnOffLED(5);
+                context.setAl2RadioLightOn(false);
+            } else {
+                context.ui.turnOffLED(4);
+                context.ui.turnOnLED(5);
+                context.setAl2RadioLightOn(true);
+            }
+        }
     }
 }

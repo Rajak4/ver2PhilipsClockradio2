@@ -22,12 +22,14 @@ public class StateAlarm extends StateAdapter {
     @Override
     public void onClick_AL1(ContextClockradio context) {
         context.setAl1(new Date(timeInMS));
+        context.ui.turnOnLED(1);
         context.setState(new StateStandby(context.getTime()));
     }
 
     @Override
     public void onClick_AL2(ContextClockradio context) {
         context.setAl2(new Date(timeInMS));
+        context.ui.turnOnLED(4);
         context.setState(new StateStandby(context.getTime()));
     }
 

@@ -21,6 +21,9 @@ public class ContextClockradio {
     private final int SLEEPTIME = 5000;
     private Date al1;
     private Date al2;
+    private boolean al1RadioLightOn;
+    private boolean al2RadioLightOn;
+
 
     private Runnable mRunnable = new Runnable() {
         @Override
@@ -36,6 +39,21 @@ public class ContextClockradio {
     }
     public int getFmFreq(){
         return fmFreq;
+    }
+
+
+    public boolean checkAlarms(Date al1, Date al2, ContextClockradio context){
+        String alarm1 = ".";
+        String alarm2 = ".";
+        String time = context.getTime().toString().substring(11,16);
+        if(alarm1 != null){
+            alarm1 = al1.toString().substring(11,16);
+        }
+        if(alarm2 != null){
+            alarm2 = al2.toString().substring(11,16);
+        }
+
+        return alarm1.equals(time) || alarm2.equals(time);
     }
 
 
@@ -220,5 +238,22 @@ public class ContextClockradio {
 
     public void setAl2(Date al2) {
         this.al2 = al2;
+    }
+
+
+    public boolean isAl1RadioLightOn() {
+        return al1RadioLightOn;
+    }
+
+    public void setAl1RadioLightOn(boolean al1RadioLightOn) {
+        this.al1RadioLightOn = al1RadioLightOn;
+    }
+
+    public boolean isAl2RadioLightOn() {
+        return al2RadioLightOn;
+    }
+
+    public void setAl2RadioLightOn(boolean al2RadioLightOn) {
+        this.al2RadioLightOn = al2RadioLightOn;
     }
 }

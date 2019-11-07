@@ -34,6 +34,20 @@ public class MainUI extends AppCompatActivity implements OnTouchListener {
         }
     };
 
+    public boolean getDisplayLed1(){
+        return displayLed1;
+    }
+    public boolean getDisplayLed2(){
+        return displayLed1;
+    }
+    public boolean getDisplayLed4(){
+        return displayLed1;
+    }
+    public boolean getDisplayLed5(){
+        return displayLed1;
+    }
+
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
